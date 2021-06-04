@@ -1,0 +1,32 @@
+package com.example.demo.config;
+
+import lombok.Getter;
+
+@Getter
+public enum ServiceMessages {
+
+    NULL_ON_PERSON_INSERT("RECEIVED NULL ON REPORT INSERT"),
+    NULL_ON_SONG_INSERT("RECEIVED NULL ON SONG INSERT"),
+
+    WRONG_FORMAT_OF_THE_INPUT_DTO("WRONG FORMAT OF THE INPUT DTO"),
+
+    PERSON_CANT_BE_NULL("PERSON CANT BE NULL"),
+    SONG_LIST_CANT_BE_NULL("SONG CANT BE NULL"),
+    PERSON_LIST_CANT_BE_NULL("PERSON LIST CANT BE NULL"),
+
+    PERSON_WITH_PROVIDED_NAME_EXISTS_IN_DB("PERSON WITH PROVIDED NAME EXISTS IN DB"),
+    SONG_WITH_PROVIDED_NAME_EXISTS_IN_DB("SONG WITH PROVIDED NAME EXISTS IN DB"),
+
+    INSERTED("INSERTED"),
+    DELETED("DELETED"),
+    NOT_DELETED("NOT DELETED"),
+    RESULT("RESULT");
+
+    private final String serviceMessage;
+
+    ServiceMessages(String msg) {
+        this.serviceMessage = msg;
+    }
+
+
+}
