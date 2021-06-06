@@ -1,7 +1,7 @@
 package com.example.demo.receive;
 
 import com.example.demo.ParentTest;
-import com.example.demo.config.ServiceMessages;
+import com.example.demo.config.constants.ServiceMessages;
 import com.example.demo.model.dto.request.SongDto;
 import com.example.demo.model.dto.response.PersonResponseDto;
 import com.example.demo.model.dto.response.SongResponseDto;

@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.config.constants;
 
 public final class ValidationMessages {
     public static final String PERSON_CANT_BE_NULL = "PERSON CANT BE NULL";

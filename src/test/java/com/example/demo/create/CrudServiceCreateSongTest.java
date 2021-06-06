@@ -1,9 +1,8 @@
 package com.example.demo.create;
 
 import com.example.demo.ParentTest;
-import com.example.demo.config.ServiceMessages;
+import com.example.demo.config.constants.ServiceMessages;
 import com.example.demo.model.dto.request.PersonDto;
-import com.example.demo.model.dto.request.PersonInsertRequestDto;
 import com.example.demo.model.dto.request.SongDto;
 import com.example.demo.model.dto.request.SongInsertRequestDto;
 import com.example.demo.model.dto.response.SongResponseDto;
@@ -12,7 +11,6 @@ import com.example.demo.model.entity.SongEntity;
 import com.example.demo.model.repo.IPersonRepo;
 import com.example.demo.model.repo.ISongRepo;
 import com.example.demo.service.interfaces.ICrudService;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

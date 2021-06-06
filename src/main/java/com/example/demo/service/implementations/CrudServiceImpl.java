@@ -1,6 +1,7 @@
 package com.example.demo.service.implementations;
 
-import com.example.demo.config.ServiceMessages;
+import com.example.demo.config.annotations.LogMethod;
+import com.example.demo.config.constants.ServiceMessages;
 import com.example.demo.model.dto.request.PersonInsertRequestDto;
 import com.example.demo.model.dto.request.SongInsertRequestDto;
 import com.example.demo.model.dto.response.PersonResponseDto;
@@ -14,6 +15,7 @@ import com.example.demo.util.EntityToDtoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 
 import java.util.*;
 
@@ -31,7 +33,9 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
+    @LogMethod
     public Map<String, PersonResponseDto> createPerson(PersonInsertRequestDto personReqDto) {
+        System.out.println(TransactionSynchronizationManager.isActualTransactionActive());
         Objects.requireNonNull(personReqDto, ServiceMessages.NULL_ON_PERSON_INSERT.getServiceMessage());
         if (personReqDto.getPersonDto().getPersonId() != null) {
             return getResultMap(ServiceMessages.WRONG_FORMAT_OF_THE_INPUT_DTO.getServiceMessage(), null);

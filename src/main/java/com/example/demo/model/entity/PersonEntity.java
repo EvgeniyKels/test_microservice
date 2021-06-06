@@ -1,6 +1,6 @@
 package com.example.demo.model.entity;
 
-import com.example.demo.config.TableNames;
+import com.example.demo.config.constants.TableNames;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

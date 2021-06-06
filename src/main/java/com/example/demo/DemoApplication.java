@@ -7,6 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 
+import java.util.TimeZone;
+
 @SpringBootApplication
 public class DemoApplication implements ApplicationListener<ContextRefreshedEvent> {
 
@@ -23,6 +25,7 @@ public class DemoApplication implements ApplicationListener<ContextRefreshedEven
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
         inserter.insertInitialData();
     }
 }

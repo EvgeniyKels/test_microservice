@@ -1,8 +1,8 @@
 package com.example.demo;
 
 import com.example.demo.util.Inserter;
-import com.example.demo.config.PredefinedQueries;
-import com.example.demo.config.TableNames;
+import com.example.demo.config.constants.PredefinedQueries;
+import com.example.demo.config.constants.TableNames;
 import lombok.NoArgsConstructor;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;

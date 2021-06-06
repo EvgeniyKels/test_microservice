@@ -1,6 +1,6 @@
 package com.example.demo.model.dto.request;
 
-import com.example.demo.config.ValidationMessages;
+import com.example.demo.config.constants.ValidationMessages;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
+//TODO inheritance in dto
 public class PersonInsertRequestDto {
     @NotNull(message = ValidationMessages.PERSON_CANT_BE_NULL)
     @JsonProperty("person")
