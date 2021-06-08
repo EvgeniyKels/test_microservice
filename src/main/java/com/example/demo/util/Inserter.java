@@ -6,8 +6,6 @@ import com.example.demo.model.repo.IPersonRepo;
 import com.example.demo.model.repo.ISongRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.ApplicationListener;
-import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,8 +22,8 @@ public class Inserter  {
     @Value(value = "${person.num}")
     private int personNum;
 
-    private final String SONG_NAME = "inserted song name";
-    private final String PERSON_NAME = "inserted person name";
+    private static final String SONG_NAME = "inserted song name";
+    private static final String PERSON_NAME = "inserted person name";
 
     @Autowired
     public Inserter(IPersonRepo personRepo, ISongRepo songRepo) {

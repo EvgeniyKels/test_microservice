@@ -11,6 +11,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @Getter
 public class PersonDto {
+    @JsonProperty("person_id")
     private Long personId;
     @JsonProperty("person_name")
     @NotNull

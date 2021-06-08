@@ -5,6 +5,7 @@ import com.example.demo.model.dto.request.UpdatePerson;
 import com.example.demo.model.dto.request.PersonInsertRequestDto;
 import com.example.demo.model.dto.request.SongInsertRequestDto;
 import com.example.demo.service.interfaces.ICrudService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,15 @@ import static com.example.demo.config.constants.ControllerConstants.*;
 public class HttpController extends AbstractHttpController{
     private ICrudService crudService;
 
+    @Autowired
+    public HttpController(ICrudService crudService) {
+        this.crudService = crudService;
+    }
+
     @PostMapping(PERSON)
-    public ResponseEntity<ResBody> createPerson(PersonInsertRequestDto personDto) {
+    public ResponseEntity<ResBody> createPerson(@RequestBody PersonInsertRequestDto personDto) {
+        System.out.println(personDto);
+//        return null;
         return prepareResponseBody(crudService.createPerson(personDto));
     }
 

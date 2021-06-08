@@ -61,6 +61,12 @@ final class ResBody {
         }
 
         @Override
+        public <K> IResponseBuilder addSingleObject(String fieldName, K obj) {
+            body.put(fieldName, obj);
+            return this;
+        }
+
+        @Override
         public ResBody build() {
             return new ResBody(this.timeStamp, this.body);
         }
