@@ -33,6 +33,9 @@ public class Inserter  {
 
     @Transactional(rollbackFor = Exception.class)
     public void insertInitialData() {
+
+
+
         List<SongEntity>songs = new ArrayList<>();
         List<PersonEntity>people = new ArrayList<>();
         for (var i = 0; i < songNum; i++) {

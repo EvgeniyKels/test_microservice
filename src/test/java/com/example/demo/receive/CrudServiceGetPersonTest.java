@@ -11,7 +11,11 @@ import com.example.demo.model.repo.IPersonRepo;
 import com.example.demo.model.repo.ISongRepo;
 import com.example.demo.service.interfaces.ICrudService;
 import org.junit.jupiter.api.Test;
+import org.mockito.Answers;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.jdbc.JdbcTestUtils;
+import org.springframework.util.ReflectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,7 +38,6 @@ class CrudServiceGetPersonTest extends ParentTest {
     @Test
     void getAllPerson() {
         Map<String, List<SongResponseDto>> songsResponse = crudService.getAllSongs();
-
         assertEquals(1, songsResponse.size());
         String resultMsg = ServiceMessages.RESULT.getServiceMessage();
         assertTrue(songsResponse.containsKey(resultMsg));
