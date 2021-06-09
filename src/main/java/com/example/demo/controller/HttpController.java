@@ -25,8 +25,6 @@ public class HttpController extends AbstractHttpController{
 
     @PostMapping(PERSON)
     public ResponseEntity<ResBody> createPerson(@RequestBody PersonInsertRequestDto personDto) {
-        System.out.println(personDto);
-//        return null;
         return prepareResponseBody(crudService.createPerson(personDto));
     }
 

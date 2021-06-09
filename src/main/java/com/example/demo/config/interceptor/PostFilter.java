@@ -33,6 +33,7 @@ public class PostFilter extends OncePerRequestFilter {
         }
         sb.append("\n");
         sb.append(wrappedRequest.getReader().lines().collect(Collectors.joining(System.lineSeparator())));
+        sb.append("\n");
         return sb.toString();
     }
 

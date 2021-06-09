@@ -1,6 +1,5 @@
 package com.example.demo.service.implementations;
 
-import com.example.demo.config.annotations.LogThisModule;
 import com.example.demo.config.constants.ServiceMessages;
 import com.example.demo.model.dto.request.PersonInsertRequestDto;
 import com.example.demo.model.dto.request.SongInsertRequestDto;
@@ -32,7 +31,6 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    @LogThisModule
     public Map<String, PersonResponseDto> createPerson(PersonInsertRequestDto personReqDto) {
         Objects.requireNonNull(personReqDto, ServiceMessages.NULL_ON_PERSON_INSERT.getServiceMessage());
         if (personReqDto.getPersonDto().getPersonId() != null) {
