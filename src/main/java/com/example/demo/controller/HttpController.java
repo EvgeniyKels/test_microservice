@@ -16,7 +16,7 @@ import static com.example.demo.config.constants.ControllerConstants.*;
 @RestController
 @RequestMapping(CRUD)
 public class HttpController extends AbstractHttpController{
-    private ICrudService crudService;
+    private final ICrudService crudService;
 
     @Autowired
     public HttpController(ICrudService crudService) {

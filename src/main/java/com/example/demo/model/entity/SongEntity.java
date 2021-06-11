@@ -3,6 +3,7 @@ package com.example.demo.model.entity;
 import com.example.demo.config.constants.TableNames;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Immutable;
 
 import javax.persistence.*;
 import java.util.HashSet;

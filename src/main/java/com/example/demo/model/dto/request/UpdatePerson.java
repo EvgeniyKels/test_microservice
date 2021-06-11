@@ -1,14 +1,10 @@
 package com.example.demo.model.dto.request;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import java.util.List;
 
+public final class UpdatePerson extends UpdateEntity {
 
-@NoArgsConstructor
-@Getter
-public class UpdatePerson {
-    private List<Integer> personIds;
-    private List<Integer> songIds;
+    public UpdatePerson(List<Integer> personIds, List<Integer> songIds) {
+        super(personIds, songIds);
+    }
 }

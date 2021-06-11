@@ -1,19 +1,28 @@
 package com.example.demo.model.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-public class PersonDto {
+public final class PersonDto {
     @JsonProperty("person_id")
-    private Long personId;
+    private final Long personId;
     @JsonProperty("person_name")
     @NotNull
-    private String personName;
+    private final String personName;
+
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public PersonDto(Long personId, @NotNull String personName) {
+        this.personId = personId;
+        this.personName = personName;
+    }
+
+    public Long getPersonId() {
+        return personId;
+    }
+
+    public String getPersonName() {
+        return personName;
+    }
 }

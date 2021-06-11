@@ -1,26 +1,27 @@
 package com.example.demo.controller;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.lang.NonNull;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 final class ResBody {
     @JsonProperty("timestamp")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private LocalDateTime timeStamp;
+    private final LocalDateTime timeStamp;
     @JsonProperty("result")
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Map<String, Object> body;
+    private final Map<String, Object> body;
 
-    private ResBody() {}
-
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
     private ResBody(LocalDateTime localDateTime, Map<String, Object> resBody) {
         this.timeStamp = localDateTime;
-        this.body = resBody;
+        this.body = Collections.unmodifiableMap(resBody);
     }
 
     public LocalDateTime getTimeStamp() {
@@ -48,6 +49,7 @@ final class ResBody {
                 body = new LinkedHashMap<>();
             }
             body.putAll(map);
+            body = Collections.unmodifiableMap(body);
             return this;
         }
 
@@ -57,12 +59,21 @@ final class ResBody {
                 body = new LinkedHashMap<>();
             }
             body.putAll(new ObjectMapper().convertValue(obj, Map.class));
+            body = Collections.unmodifiableMap(body);
             return this;
         }
 
         @Override
         public <K> IResponseBuilder addSingleObject(String fieldName, K obj) {
-            body.put(fieldName, obj);
+            if (this.body == null) {
+                body = new LinkedHashMap<>();
+                body.put(fieldName, obj);
+                body = Collections.unmodifiableMap(body);
+            } else {
+                Map<String, Object> newBody = new LinkedHashMap<>(body);
+                newBody.put(fieldName, obj);
+                body = Collections.unmodifiableMap(newBody);
+            }
             return this;
         }
 
