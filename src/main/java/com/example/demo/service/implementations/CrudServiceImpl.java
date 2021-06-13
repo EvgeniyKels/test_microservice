@@ -90,7 +90,7 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
         return getResultMap(
                 ServiceMessages.RESULT.getServiceMessage(),
                 mapPersonEntityListToPersonDtoList(
-                        personRepo.findAllBySongSet_songIdIn(songIds)
+                        personRepo.findAllDistinctBySongSet_SongIdIn(songIds)
                 ));
     }
 
@@ -101,7 +101,7 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
         return getResultMap(
                 ServiceMessages.RESULT.getServiceMessage(),
                 mapSongEntityListToSongDtoList(
-                        songRepo.findAllByPersonSet_personIdIn(personIds)
+                        songRepo.findAllByPersonSet_PersonIdIn(personIds)
                 ));
     }
 

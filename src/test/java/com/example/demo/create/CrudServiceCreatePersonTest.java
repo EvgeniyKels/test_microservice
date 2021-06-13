@@ -13,6 +13,9 @@ import com.example.demo.model.repo.ISongRepo;
 import com.example.demo.service.interfaces.ICrudService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 
 import java.util.*;
 import java.util.stream.Collectors;

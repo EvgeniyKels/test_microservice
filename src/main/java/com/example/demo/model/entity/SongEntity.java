@@ -3,7 +3,6 @@ package com.example.demo.model.entity;
 import com.example.demo.config.constants.TableNames;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Immutable;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -21,11 +20,11 @@ public class SongEntity {
     private Long songId;
     @Column(name = TableNames.SONG_NAME)
     private String songName;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = TableNames.SONGS_PEOPLE_TABLE,
-            joinColumns = @JoinColumn(name = TableNames.PERSON_ID),
-            inverseJoinColumns = @JoinColumn(name = TableNames.SONG_ID)
+            joinColumns = @JoinColumn(name = TableNames.SONG_ID),
+            inverseJoinColumns = @JoinColumn(name = TableNames.PERSON_ID)
     )
     private final Set<PersonEntity>personSet = new HashSet<>();
 

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Repository
 public interface ISongRepo extends JpaRepository<SongEntity, Long> {
@@ -13,7 +14,7 @@ public interface ISongRepo extends JpaRepository<SongEntity, Long> {
 
     Optional<SongEntity> findBySongName(String songName);
 
-    List<SongEntity> findAllByPersonSet_personIdIn(List<Long> personIds);
+    List<SongEntity> findAllByPersonSet_PersonIdIn(Iterable<Long> personIds);
 
     long countBySongIdIn(Iterable<Long> songIds);
 }
