@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service
-public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
+public class CrudServiceImpl implements ICrudService {
 
     private final IPersonRepo personRepo;
     private final ISongRepo songRepo;
@@ -34,7 +34,7 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
     public Map<String, PersonResponseDto> createPerson(PersonInsertRequestDto personReqDto) {
         Objects.requireNonNull(personReqDto, ServiceMessages.NULL_ON_PERSON_INSERT.getServiceMessage());
         if (personReqDto.getPersonDto().getPersonId() != null) {
-            return getResultMap(ServiceMessages.WRONG_FORMAT_OF_THE_INPUT_DTO.getServiceMessage(), null);
+            return EntityToDtoMapper.getResultMap(ServiceMessages.WRONG_FORMAT_OF_THE_INPUT_DTO.getServiceMessage(), null);
         }
         String personName = personReqDto.getPersonDto().getPersonName();
         if(personRepo.findByPersonName(personName).isEmpty()) {
@@ -50,9 +50,9 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
                 }
             }
             var savedPerson = personRepo.save(person);
-            return getResultMap(ServiceMessages.INSERTED.getServiceMessage(), new PersonResponseDto(savedPerson, savedPerson.getSongSet()));
+            return EntityToDtoMapper.getResultMap(ServiceMessages.INSERTED.getServiceMessage(), new PersonResponseDto(savedPerson, savedPerson.getSongSet()));
         } else {
-            return getResultMap(ServiceMessages.PERSON_WITH_PROVIDED_NAME_EXISTS_IN_DB.getServiceMessage(), null);
+            return EntityToDtoMapper.getResultMap(ServiceMessages.PERSON_WITH_PROVIDED_NAME_EXISTS_IN_DB.getServiceMessage(), null);
         }
     }
 
@@ -61,7 +61,7 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
     public Map<String, SongResponseDto> createSong(SongInsertRequestDto songReqDTO) {
         Objects.requireNonNull(songReqDTO, ServiceMessages.NULL_ON_SONG_INSERT.getServiceMessage());
         if(songReqDTO.getSongDto().getSongId() != null) {
-            return getResultMap(ServiceMessages.WRONG_FORMAT_OF_THE_INPUT_DTO.getServiceMessage(), null);
+            return EntityToDtoMapper.getResultMap(ServiceMessages.WRONG_FORMAT_OF_THE_INPUT_DTO.getServiceMessage(), null);
         }
         String songName = songReqDTO.getSongDto().getSongName();
         if(songRepo.findBySongName(songName).isEmpty()) {
@@ -77,9 +77,9 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
                 }
             }
             var savedSong = songRepo.save(song);
-            return getResultMap(ServiceMessages.INSERTED.getServiceMessage(), new SongResponseDto(savedSong, savedSong.getPersonSet()));
+            return EntityToDtoMapper.getResultMap(ServiceMessages.INSERTED.getServiceMessage(), new SongResponseDto(savedSong, savedSong.getPersonSet()));
         } else {
-            return getResultMap(ServiceMessages.SONG_WITH_PROVIDED_NAME_EXISTS_IN_DB.getServiceMessage(), null);
+            return EntityToDtoMapper.getResultMap(ServiceMessages.SONG_WITH_PROVIDED_NAME_EXISTS_IN_DB.getServiceMessage(), null);
         }
     }
 
@@ -87,9 +87,9 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
     @Transactional(rollbackFor = Exception.class)
     public Map<String, List<PersonResponseDto>> getPersonsBySong(List<Long> songIds) {
         Objects.requireNonNull(songIds, ServiceMessages.SONG_LIST_CANT_BE_NULL.getServiceMessage());
-        return getResultMap(
+        return EntityToDtoMapper.getResultMap(
                 ServiceMessages.RESULT.getServiceMessage(),
-                mapPersonEntityListToPersonDtoList(
+                EntityToDtoMapper.mapPersonEntityListToPersonDtoList(
                         personRepo.findAllDistinctBySongSet_SongIdIn(songIds)
                 ));
     }
@@ -98,9 +98,9 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
     @Transactional(rollbackFor = Exception.class)
     public Map<String, List<SongResponseDto>> getSongsByPerson(List<Long> personIds) {
         Objects.requireNonNull(personIds, ServiceMessages.PERSON_LIST_CANT_BE_NULL.getServiceMessage());
-        return getResultMap(
+        return EntityToDtoMapper.getResultMap(
                 ServiceMessages.RESULT.getServiceMessage(),
-                mapSongEntityListToSongDtoList(
+                EntityToDtoMapper.mapSongEntityListToSongDtoList(
                         songRepo.findAllByPersonSet_PersonIdIn(personIds)
                 ));
     }
@@ -108,9 +108,9 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Map<String, List<PersonResponseDto>> getAllPersons() {
-        return getResultMap(
+        return EntityToDtoMapper.getResultMap(
                 ServiceMessages.RESULT.getServiceMessage(),
-                mapPersonEntityListToPersonDtoList(
+                EntityToDtoMapper.mapPersonEntityListToPersonDtoList(
                         personRepo.findAll()
                 ));
     }
@@ -118,9 +118,9 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Map<String, List<SongResponseDto>> getAllSongs() {
-        return getResultMap(
+        return EntityToDtoMapper.getResultMap(
                 ServiceMessages.RESULT.getServiceMessage(),
-                mapSongEntityListToSongDtoList(
+                EntityToDtoMapper.mapSongEntityListToSongDtoList(
                         songRepo.findAll()
                 ));
     }
@@ -128,12 +128,14 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Map<String, List<PersonResponseDto>> updatePerson(List<Integer> personIds, List<Integer> songIds) {
+        //TODO
         return null;
     }
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public Map<String, List<SongResponseDto>> updateSong(List<Integer> songIds, List<Integer> personIds) {
+        //TODO
         return null;
     }
 
@@ -143,12 +145,12 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
         Objects.requireNonNull(personIds, ServiceMessages.PERSON_LIST_CANT_BE_NULL.getServiceMessage());
         if (personIds.size() == personRepo.countByPersonIdIn(personIds)) {
             personRepo.deleteAllById(personIds); //TODO check relations
-            return getResultMap(
+            return EntityToDtoMapper.getResultMap(
                     ServiceMessages.DELETED.getServiceMessage(),
                     (long) personIds.size()
             );
         }
-        return getResultMap(ServiceMessages.NOT_DELETED.getServiceMessage(), null);
+        return EntityToDtoMapper.getResultMap(ServiceMessages.NOT_DELETED.getServiceMessage(), null);
     }
 
     @Override
@@ -157,11 +159,11 @@ public class CrudServiceImpl extends EntityToDtoMapper implements ICrudService {
         Objects.requireNonNull(songIds, ServiceMessages.SONG_LIST_CANT_BE_NULL.getServiceMessage());
         if (songIds.size() == songRepo.countBySongIdIn(songIds)) {
             songRepo.deleteAllById(songIds); //TODO check relations
-            return getResultMap(
+            return EntityToDtoMapper.getResultMap(
                     ServiceMessages.DELETED.getServiceMessage(),
                     (long) songIds.size()
             );
         }
-        return getResultMap(ServiceMessages.NOT_DELETED.getServiceMessage(), null);
+        return EntityToDtoMapper.getResultMap(ServiceMessages.NOT_DELETED.getServiceMessage(), null);
     }
 }

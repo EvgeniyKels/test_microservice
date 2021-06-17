@@ -1,6 +1,6 @@
-package com.example.demo.create;
+package com.example.demo.integration_test.create;
 
-import com.example.demo.ParentTest;
+import com.example.demo.integration_test.ParentTest;
 import com.example.demo.config.constants.ServiceMessages;
 import com.example.demo.model.dto.request.PersonDto;
 import com.example.demo.model.dto.request.SongDto;

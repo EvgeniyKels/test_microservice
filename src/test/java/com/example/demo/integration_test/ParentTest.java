@@ -1,32 +1,27 @@
-package com.example.demo;
+package com.example.demo.integration_test;
 
-import com.example.demo.config.constants.PredefinedQueries;
-import com.example.demo.config.constants.TableNames;
 import lombok.NoArgsConstructor;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.jdbc.JdbcTestUtils;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 
-import java.util.Arrays;
-import java.util.Objects;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @NoArgsConstructor
 @SpringBootTest
+@ActiveProfiles("test")
+@Sql(value = "/test_data.sql", executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 public class ParentTest {
 
     public static final String TEST_NAME = "test name";
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-
 
     @Test
     void notNullTest() {

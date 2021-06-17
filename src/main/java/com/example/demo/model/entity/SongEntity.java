@@ -20,7 +20,7 @@ public class SongEntity {
     private Long songId;
     @Column(name = TableNames.SONG_NAME)
     private String songName;
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
     @JoinTable(
             name = TableNames.SONGS_PEOPLE_TABLE,
             joinColumns = @JoinColumn(name = TableNames.SONG_ID),

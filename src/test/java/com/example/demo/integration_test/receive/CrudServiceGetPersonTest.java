@@ -1,6 +1,6 @@
-package com.example.demo.receive;
+package com.example.demo.integration_test.receive;
 
-import com.example.demo.ParentTest;
+import com.example.demo.integration_test.ParentTest;
 import com.example.demo.config.constants.ServiceMessages;
 import com.example.demo.model.dto.request.SongDto;
 import com.example.demo.model.dto.response.PersonResponseDto;
@@ -11,11 +11,7 @@ import com.example.demo.model.repo.IPersonRepo;
 import com.example.demo.model.repo.ISongRepo;
 import com.example.demo.service.interfaces.ICrudService;
 import org.junit.jupiter.api.Test;
-import org.mockito.Answers;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.jdbc.JdbcTestUtils;
-import org.springframework.util.ReflectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -103,7 +99,7 @@ class CrudServiceGetPersonTest extends ParentTest {
         for (int i = 0; i < numberOfSongs; i++) {
             songIds.add(allIds.get(getRandomInt(1, (int) songRepo.count())));
         }
-        return Collections.unmodifiableList(new ArrayList<>(songIds));
+        return List.copyOf(songIds);
     }
 }
 

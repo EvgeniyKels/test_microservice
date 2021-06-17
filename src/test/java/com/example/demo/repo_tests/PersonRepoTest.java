@@ -1,7 +1,5 @@
-package com.example.demo.repository;
+package com.example.demo.repo_tests;
 
-import com.example.demo.config.constants.PredefinedQueries;
-import com.example.demo.config.constants.TableNames;
 import com.example.demo.model.entity.PersonEntity;
 import com.example.demo.model.repo.IPersonRepo;
 import org.junit.jupiter.api.Test;
@@ -11,16 +9,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.jdbc.JdbcTestUtils;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@ActiveProfiles("test")
-@SpringBootTest
-@Sql(scripts = "/data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+
 class PersonRepoTest extends RepoTestMethods {
     private final JdbcTemplate jdbcTemplate;
     private final IPersonRepo personRepo;
@@ -52,7 +46,7 @@ class PersonRepoTest extends RepoTestMethods {
     @Test
     void getPersonByName() {
         PersonEntity personTestEntity = Objects.requireNonNull(jdbcTemplate.query(
-                "SELECT person_id, person_name FROM people", getResultSetEntityExtractor(new PersonEntity()))).stream().findAny().orElseThrow();
+                "SELECT person_id, person_name FROM people", getResultSetEntityExtractor(PersonEntity.class))).stream().findAny().orElseThrow();
         Optional<PersonEntity> optionalPerson = personRepo.findByPersonName(Objects.requireNonNull(personTestEntity).getPersonName());
         assertFalse(optionalPerson.isEmpty());
         PersonEntity personEntity = optionalPerson.get();
@@ -73,7 +67,7 @@ class PersonRepoTest extends RepoTestMethods {
 
         List<PersonEntity> people = jdbcTemplate.query(
                 "SELECT DISTINCT p.person_id, p.person_name FROM people AS p JOIN songs_people AS sp ON p.person_id = sp.person_id JOIN songs AS s ON sp.song_id = s.song_id " +
-                "WHERE s.song_id IN (" + getIdsString(randomSongIds) + ")", getResultSetEntityExtractor(new PersonEntity()));
+                "WHERE s.song_id IN (" + getIdsString(randomSongIds) + ")", getResultSetEntityExtractor(PersonEntity.class));
 
         List<PersonEntity> peopleFromRepo = personRepo.findAllDistinctBySongSet_SongIdIn(randomSongIds);
 
@@ -94,7 +88,7 @@ class PersonRepoTest extends RepoTestMethods {
 
         List<PersonEntity> people = jdbcTemplate.query(
                 "SELECT DISTINCT p.person_id, p.person_name FROM people p WHERE p.person_id IN (" + getIdsString(randomPeopleIds) + ")",
-                getResultSetEntityExtractor(new PersonEntity()));
+                getResultSetEntityExtractor(PersonEntity.class));
 
         List<PersonEntity> peopleFromRepo = personRepo.findAllByPersonIdIn(randomPeopleIds);
 
@@ -107,4 +101,6 @@ class PersonRepoTest extends RepoTestMethods {
         List<PersonEntity> peopleFromRepo = personRepo.findAllByPersonIdIn(notExistingIds);
         assertEquals(0, peopleFromRepo.size());
     }
+
+
 }

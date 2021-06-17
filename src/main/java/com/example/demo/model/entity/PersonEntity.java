@@ -20,7 +20,7 @@ public class PersonEntity {
     private Long personId;
     @Column(name = TableNames.PERSON_NAME)
     private String personName;
-    @ManyToMany(mappedBy = "personSet", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "personSet", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
     private final Set<SongEntity> songSet = new HashSet<>();
 
     public PersonEntity(String personName) {

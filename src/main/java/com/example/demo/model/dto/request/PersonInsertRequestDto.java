@@ -21,7 +21,7 @@ public final class PersonInsertRequestDto {
             @NotNull(message = ValidationMessages.PERSON_CANT_BE_NULL) PersonDto personDto,
             @NotNull(message = ValidationMessages.SONG_LIST_IDS_CANT_BE_NULL) List<Long> songIds) {
         this.personDto = personDto;
-        this.songIds = Collections.unmodifiableList(songIds);
+        this.songIds = songIds == null ? null : Collections.unmodifiableList(songIds);
     }
 
     public PersonDto getPersonDto() {

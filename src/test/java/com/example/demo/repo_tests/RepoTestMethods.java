@@ -1,11 +1,17 @@
-package com.example.demo.repository;
+package com.example.demo.repo_tests;
 
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
 
 import javax.persistence.Column;
 import java.lang.reflect.Field;
 import java.util.*;
 
+@ActiveProfiles("test")
+@SpringBootTest
+@Sql(scripts = "/test_data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 public class RepoTestMethods {
 
     Set<Long> getRandomIdSet(List<Long> idsFromDb) {
@@ -36,10 +42,17 @@ public class RepoTestMethods {
         };
     }
 
-   <K> ResultSetExtractor<List<K>> getResultSetEntityExtractor(K entity) {
+    <K> ResultSetExtractor<List<K>> getResultSetEntityExtractor(Class<K> clazz) {
         return rs -> {
             List<K> entities = new ArrayList<>();
             while (rs.next()) {
+                K entity = null;
+                try {
+                    entity = clazz.newInstance();
+                } catch (InstantiationException | IllegalAccessException e) {
+                    e.printStackTrace();
+                    System.out.println(e.getMessage());
+                }
                 Class<?> entityClass = entity.getClass();
                 Field[] declaredFields = entityClass.getDeclaredFields();
                 for (Field field : declaredFields) {
@@ -49,7 +62,7 @@ public class RepoTestMethods {
                         Class<?> type = field.getType();
                         Object object = rs.getObject(columnName, type);
                         try {
-                            field.set(entityClass, object);
+                            field.set(entity, object);
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
                             System.out.println(e.getMessage());
@@ -62,4 +75,31 @@ public class RepoTestMethods {
             return entities;
         };
     }
+
+//   <K> ResultSetExtractor<List<K>> getResultSetEntityExtractor(Class<K> clazz) {
+//        return rs -> {
+//            List<K> entities = new ArrayList<>();
+//            while (rs.next()) {
+//                Class<?> entityClass = entity.getClass();
+//                Field[] declaredFields = entityClass.getDeclaredFields();
+//                for (Field field : declaredFields) {
+//                    if (field.isAnnotationPresent(Column.class)) {
+//                        field.setAccessible(true);
+//                        String columnName = field.getAnnotation(Column.class).name();
+//                        Class<?> type = field.getType();
+//                        Object object = rs.getObject(columnName, type);
+//                        try {
+//                            field.set(entity, object);
+//                        } catch (IllegalAccessException e) {
+//                            e.printStackTrace();
+//                            System.out.println(e.getMessage());
+//                        }
+//                        field.setAccessible(false);
+//                    }
+//                }
+//                entities.add(entity);
+//            }
+//            return entities;
+//        };
+//    }
 }
