@@ -1,6 +1,6 @@
 package com.example.demo.model.entity;
 
-import com.example.demo.config.TableNames;
+import com.example.demo.config.constants.TableNames;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,8 +20,8 @@ public class PersonEntity {
     private Long personId;
     @Column(name = TableNames.PERSON_NAME)
     private String personName;
-    @ManyToMany(mappedBy = "personSet", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Set<SongEntity> songSet = new HashSet<>();
+    @ManyToMany(mappedBy = "personSet", fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
+    private final Set<SongEntity> songSet = new HashSet<>();
 
     public PersonEntity(String personName) {
         this.personName = personName;

@@ -1,13 +1,25 @@
 package com.example.demo.model.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
-public class SongDto {
-    private Long songId;
-    private String songName;
+public final class SongDto {
+    @JsonProperty("song_id")
+    private final Long songId;
+    @JsonProperty("song_name")
+    private final String songName;
+
+    @JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+    public SongDto(Long songId, String songName) {
+        this.songId = songId;
+        this.songName = songName;
+    }
+
+    public Long getSongId() {
+        return songId;
+    }
+
+    public String getSongName() {
+        return songName;
+    }
 }

@@ -1,4 +1,4 @@
-package com.example.demo.config;
+package com.example.demo.config.constants;
 
 public enum PredefinedQueries {
     SET_FOREIGN_KEYS_CHECK_0("SET foreign_key_checks = 0"),

@@ -13,6 +13,8 @@ import java.util.stream.Collectors;
 
 public class EntityToDtoMapper {
 
+    private EntityToDtoMapper() {}
+
     public static List<PersonResponseDto> mapPersonEntityListToPersonDtoList(List<PersonEntity> personEntityList) {
         return personEntityList.stream().
                 map(x -> new PersonResponseDto(x, x.getSongSet())).collect(Collectors.toUnmodifiableList());

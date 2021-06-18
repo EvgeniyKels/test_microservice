@@ -1,6 +1,6 @@
 package com.example.demo.model.entity;
 
-import com.example.demo.config.TableNames;
+import com.example.demo.config.constants.TableNames;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,11 +20,11 @@ public class SongEntity {
     private Long songId;
     @Column(name = TableNames.SONG_NAME)
     private String songName;
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH })
     @JoinTable(
             name = TableNames.SONGS_PEOPLE_TABLE,
-            joinColumns = @JoinColumn(name = TableNames.PERSON_ID),
-            inverseJoinColumns = @JoinColumn(name = TableNames.SONG_ID)
+            joinColumns = @JoinColumn(name = TableNames.SONG_ID),
+            inverseJoinColumns = @JoinColumn(name = TableNames.PERSON_ID)
     )
     private final Set<PersonEntity>personSet = new HashSet<>();
 
@@ -52,4 +52,6 @@ public class SongEntity {
                 ", songName='" + songName + '\'' +
                 '}';
     }
+
+
 }

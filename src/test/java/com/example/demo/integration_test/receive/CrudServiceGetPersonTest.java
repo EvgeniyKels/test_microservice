@@ -1,7 +1,7 @@
-package com.example.demo.receive;
+package com.example.demo.integration_test.receive;
 
-import com.example.demo.ParentTest;
-import com.example.demo.config.ServiceMessages;
+import com.example.demo.integration_test.ParentTest;
+import com.example.demo.config.constants.ServiceMessages;
 import com.example.demo.model.dto.request.SongDto;
 import com.example.demo.model.dto.response.PersonResponseDto;
 import com.example.demo.model.dto.response.SongResponseDto;
@@ -34,7 +34,6 @@ class CrudServiceGetPersonTest extends ParentTest {
     @Test
     void getAllPerson() {
         Map<String, List<SongResponseDto>> songsResponse = crudService.getAllSongs();
-
         assertEquals(1, songsResponse.size());
         String resultMsg = ServiceMessages.RESULT.getServiceMessage();
         assertTrue(songsResponse.containsKey(resultMsg));
@@ -100,7 +99,7 @@ class CrudServiceGetPersonTest extends ParentTest {
         for (int i = 0; i < numberOfSongs; i++) {
             songIds.add(allIds.get(getRandomInt(1, (int) songRepo.count())));
         }
-        return Collections.unmodifiableList(new ArrayList<>(songIds));
+        return List.copyOf(songIds);
     }
 }
 
