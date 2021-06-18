@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.example.demo.config.constants.ControllerConstants.*;
@@ -71,5 +72,10 @@ public class HttpController extends AbstractHttpController{
     @DeleteMapping(SONG)
     public ResponseEntity<ResBody> deleteSong(List<Long> songIds) {
         return prepareResponseBody(crudService.deleteSong(songIds));
+    }
+
+    @GetMapping("/test")
+    public ResponseEntity<String>test() {
+        return ResponseEntity.ok().body(LocalDateTime.now().toString());
     }
 }
